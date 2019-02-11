@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\TestAgedBrieDegradation.cs" />
+    <Compile Include="Rules\TestItemsDegradeBeforeSellBy.cs" />
     <Compile Include="TestQualityManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +70,7 @@
       <Name>GildedRose.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

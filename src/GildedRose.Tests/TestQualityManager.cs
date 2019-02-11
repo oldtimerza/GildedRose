@@ -10,13 +10,16 @@ namespace GildedRose.Tests
     {
         private QualityManager qualityManger;
 
+        private IRulesEngine rulesEngine;
+
         private IList<Item> items;
 
         [SetUp]
         public void setup()
         {
-           qualityManger = new QualityManager();
-           items = new List<Item>();
+            rulesEngine = new DegradationRulesEngine();
+            qualityManger = new QualityManager(rulesEngine.createRules());
+            items = new List<Item>();
         }
 
         [Test]
@@ -31,7 +34,7 @@ namespace GildedRose.Tests
             };
             items.Add(item);
 
-            qualityManger.UpdateQuality(items);
+            qualityManger.update(items);
 
             Assert.That(item.Quality, Is.EqualTo(quality - 1));
         }
@@ -48,7 +51,7 @@ namespace GildedRose.Tests
             };
             items.Add(item);
 
-            qualityManger.UpdateQuality(items);
+            qualityManger.update(items);
 
             Assert.That(item.Quality, Is.EqualTo(quality - 2));
         }
@@ -65,7 +68,7 @@ namespace GildedRose.Tests
             };
             items.Add(item);
             
-            qualityManger.UpdateQuality(items);
+            qualityManger.update(items);
 
             Assert.That(item.Quality, Is.GreaterThan(-1));
         }
@@ -82,7 +85,7 @@ namespace GildedRose.Tests
             };
             items.Add(item);
 
-            qualityManger.UpdateQuality(items);
+            qualityManger.update(items);
 
             Assert.That(item.Quality, Is.LessThan(51));
         }
@@ -98,7 +101,7 @@ namespace GildedRose.Tests
             };
             items.Add(brie);
 
-            qualityManger.UpdateQuality(items);
+            qualityManger.update(items);
 
             int expectedQuality = 50;
             Assert.That(brie.Quality, Is.EqualTo(expectedQuality));
@@ -116,7 +119,7 @@ namespace GildedRose.Tests
             };
             items.Add(sulfuras);
 
-            qualityManger.UpdateQuality(items);
+            qualityManger.update(items);
 
             Assert.That(sulfuras.Quality, Is.EqualTo(quality));
         }
@@ -133,7 +136,7 @@ namespace GildedRose.Tests
             };
             items.Add(backStagePass);
 
-            qualityManger.UpdateQuality(items);
+            qualityManger.update(items);
 
             Assert.That(backStagePass.Quality, Is.EqualTo(quality + 1));
         }
@@ -150,7 +153,7 @@ namespace GildedRose.Tests
             };
             items.Add(backStagePass);
 
-            qualityManger.UpdateQuality(items);
+            qualityManger.update(items);
 
             Assert.That(backStagePass.Quality, Is.EqualTo(quality + 2));
         }
@@ -167,7 +170,7 @@ namespace GildedRose.Tests
             };
             items.Add(backStagePass);
 
-            qualityManger.UpdateQuality(items);
+            qualityManger.update(items);
 
             Assert.That(backStagePass.Quality, Is.EqualTo(quality + 3));
         }
@@ -184,7 +187,7 @@ namespace GildedRose.Tests
             };
             items.Add(backStagePass);
 
-            qualityManger.UpdateQuality(items);
+            qualityManger.update(items);
 
             Assert.That(backStagePass.Quality, Is.EqualTo(0));
         }

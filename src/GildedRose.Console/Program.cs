@@ -1,25 +1,28 @@
 ﻿using System.Collections.Generic;
 using GildedRose.Console.Models;
 using GildedRose.Core;
+using GildedRose.Core.Rules;
+using SimpleInjector;
 
 namespace GildedRose.Console
 {
     class Program
     {
-        private readonly QualityManager _qualityManager;
+        private static readonly Container container;
 
-        public Program()
+        static Program()
         {
-            _qualityManager = new QualityManager();
-        }
-
-        public QualityManager QualityManager
-        {
-            get { return _qualityManager; }
+            container = new Container();
+            IRulesEngine rulesEngine = new DegradationRulesEngine();
+            container.RegisterInstance<IList<IDegradeRule>>(rulesEngine.createRules());
+            container.Register<QualityManager>();
+            container.Verify();
         }
 
         static void Main(string[] args)
         {
+            QualityManager qualityManager = container.GetInstance<QualityManager>();
+
             System.Console.WriteLine("OMGHAI!");
             IList<Item> Items = new List<Item>()
             {
@@ -35,9 +38,10 @@ namespace GildedRose.Console
                 },
                 new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
+
             var app = new Program();
 
-            app.QualityManager.UpdateQuality(Items);
+            qualityManager.update(Items);
 
             System.Console.ReadKey();
 
