@@ -3,7 +3,7 @@ using GildedRose.Core.Rules;
 
 namespace GildedRose.Core
 {
-    public interface IRulesEngine
+    public interface IRulesSet
     {
         IList<IDegradeRule> CreateRules();
     }

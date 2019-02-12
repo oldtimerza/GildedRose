@@ -32,6 +32,18 @@ namespace GildedRose.Tests.Rules
         }
 
         [Test]
+        public void AgedBrieShouldGoUpTwiceAsMuchAfterSellBy()
+        {
+            Item item = new AgedBrie()
+            {
+                Quality =  _quality,
+                SellIn = -1
+            };
+            _rule.Apply(item);
+            Assert.That(item.Quality, Is.EqualTo(_quality + 2));
+        }
+
+        [Test]
         public void ShouldNotApplyToNormalItems()
         {
             Item item = new Item()

@@ -14,26 +14,25 @@ namespace GildedRose.Console
         static Program()
         {
             container = new Container();
-            IRulesEngine rulesEngine = new DegradationRulesEngine();
-            container.RegisterInstance<IList<IDegradeRule>>(rulesEngine.CreateRules());
-            container.Register<QualityManager>();
+            IRulesSet rulesSet = new DegradationRulesSet();
+            container.RegisterInstance<IList<IDegradeRule>>(rulesSet.CreateRules());
+            container.Register<QualityAdjuster>();
             container.Verify();
         }
 
         static void Main(string[] args)
         {
-            QualityManager qualityManager = container.GetInstance<QualityManager>();
+            QualityAdjuster qualityAdjuster = container.GetInstance<QualityAdjuster>();
 
             System.Console.WriteLine("OMGHAI!");
             IList<Item> Items = new List<Item>()
             {
                 new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
-                new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
+                new AgedBrie() {SellIn = 2, Quality = 0},
                 new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
-                new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                new Item
+                new Sulfuras() { SellIn = 0},
+                new BackstagePass()
                 {
-                    Name = "Backstage passes to a TAFKAL80ETC concert",
                     SellIn = 15,
                     Quality = 20
                 },
@@ -42,7 +41,7 @@ namespace GildedRose.Console
 
             var app = new Program();
 
-            qualityManager.Update(Items);
+            qualityAdjuster.Update(Items);
 
             System.Console.ReadKey();
 

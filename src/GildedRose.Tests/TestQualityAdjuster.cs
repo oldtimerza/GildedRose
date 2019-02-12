@@ -6,19 +6,19 @@ using GildedRose.Core;
 namespace GildedRose.Tests
 {
     [TestFixture]
-    class TestQualityManager
+    class TestQualityAdjuster
     {
-        private QualityManager _qualityManger;
+        private QualityAdjuster _qualityManger;
 
-        private IRulesEngine _rulesEngine;
+        private IRulesSet _rulesSet;
 
         private IList<Item> _items;
 
         [SetUp]
         public void Setup()
         {
-            _rulesEngine = new DegradationRulesEngine();
-            _qualityManger = new QualityManager(_rulesEngine.CreateRules());
+            _rulesSet = new DegradationRulesSet();
+            _qualityManger = new QualityAdjuster(_rulesSet.CreateRules());
             _items = new List<Item>();
         }
 
@@ -91,7 +91,24 @@ namespace GildedRose.Tests
         }
 
         [Test]
-        public void AgedBrieIncreasesAsItGetsOlderRegardlessOfSellByDate()
+        public void AgedBrieIncreasesNormallyBeforeSellBy()
+        {
+            Item brie = new Item()
+            {
+                Name = "Aged Brie",
+                SellIn = 0,
+                Quality = 49
+            };
+            _items.Add(brie);
+
+            _qualityManger.Update(_items);
+
+            int expectedQuality = 50;
+            Assert.That(brie.Quality, Is.EqualTo(expectedQuality));
+        }
+
+        [Test]
+        public void AgedBrieIncreasesTwiceAsMuchItAfterSellBy()
         {
             Item brie = new Item()
             {

@@ -3,7 +3,7 @@ using GildedRose.Core.Rules;
 
 namespace GildedRose.Core
 {
-    public class DegradationRulesEngine : IRulesEngine
+    public class DegradationRulesSet : IRulesSet
     {
         public IList<IDegradeRule> CreateRules()
         {
@@ -11,7 +11,8 @@ namespace GildedRose.Core
             {
                 new ItemsDegradeBeforeSellBy(),
                 new AgedBrieDegradation(),
-                new BackstagePassDegradation()
+                new BackstagePassDegradation(),
+                new SulfurasDegradation()
             };
             return rules;
         }

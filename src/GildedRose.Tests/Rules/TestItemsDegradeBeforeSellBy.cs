@@ -7,20 +7,43 @@ namespace GildedRose.Tests.Rules
     [TestFixture]
     class TestItemsDegradeBeforeSellBy
     {
+        private int _quality;
+        private IDegradeRule _rule;
+
+        [SetUp]
+        public void setup()
+        {
+            _quality = 50;
+            _rule = new ItemsDegradeBeforeSellBy();
+        }
+
         [Test]
         public void ShouldDegradeTheQualityBy1()
         {
-            IDegradeRule rule = new ItemsDegradeBeforeSellBy();
-            int quality = 50;
             Item item = new Item()
             {
                 Name = "someItem",
-                Quality = quality,
+                Quality = _quality,
                 SellIn = 10
             };
-            rule.Apply(item);
+            _rule.Apply(item);
 
-            Assert.That(item.Quality, Is.EqualTo(quality - 1));
+            Assert.That(item.Quality, Is.EqualTo(_quality - 1));
+        }
+
+        [Test]
+        public void ShouldDegradeTwiceAsFastAfterSellBy()
+        {
+            Item item = new Item()
+            {
+                Name = "someItem",
+                Quality = _quality,
+                SellIn = -1
+            }; 
+
+            _rule.Apply(item);
+
+            Assert.That(item.Quality, Is.EqualTo(_quality - 2));
         }
     }
 }

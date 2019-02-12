@@ -1,4 +1,5 @@
 ﻿using GildedRose.Console.Models;
+using GildedRose.Core.Models.SpecialItems;
 
 namespace GildedRose.Core.Rules
 {
@@ -6,11 +7,15 @@ namespace GildedRose.Core.Rules
     {
         public void Apply(Item item)
         {
-            if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
+            if (item.Name != AgedBrie.SpecialName && item.Name != BackstagePass.SpecialName && item.Name != Sulfuras.SpecialName)
             {
                 if (item.Quality > 0)
                 {
-                    if (item.Name != "Sulfuras, Hand of Ragnaros")
+                    if (item.SellIn < 0)
+                    {
+                        item.Quality = item.Quality - 2;
+                    }
+                    else
                     {
                         item.Quality = item.Quality - 1;
                     }

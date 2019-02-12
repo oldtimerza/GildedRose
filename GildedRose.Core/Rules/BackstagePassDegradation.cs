@@ -28,6 +28,11 @@ namespace GildedRose.Core.Rules
                         item.Quality = item.Quality + 1;
                     }
                 }
+
+                if (item.SellIn < 0)
+                {
+                    item.Quality = 0;
+                }
             }
         }
     }
