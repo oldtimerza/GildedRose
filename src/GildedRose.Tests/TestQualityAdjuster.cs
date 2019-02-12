@@ -18,7 +18,7 @@ namespace GildedRose.Tests
         public void Setup()
         {
             _rulesSet = new DegradationRulesSet();
-            _qualityManger = new QualityAdjuster(_rulesSet.CreateRules());
+            _qualityManger = new QualityAdjuster(_rulesSet);
             _items = new List<Item>();
         }
 

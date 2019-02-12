@@ -6,18 +6,18 @@ namespace GildedRose.Core
 {
     public class QualityAdjuster
     {
-        private readonly IList<IDegradeRule> rules;
+        private readonly IRulesSet _ruleSet;
 
-        public QualityAdjuster(IList<IDegradeRule> rules)
+        public QualityAdjuster(IRulesSet ruleSet)
         {
-            this.rules = rules;
+            this._ruleSet = ruleSet;
         }
 
         public void Update(IList<Item> Items)
         {
             foreach(Item item in Items)
             {
-                foreach (IDegradeRule rule in rules)
+                foreach (IDegradeRule rule in _ruleSet.CreateRules())
                 {
                     rule.Apply(item);
                 }

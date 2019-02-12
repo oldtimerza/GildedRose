@@ -14,34 +14,22 @@ namespace GildedRose.Console
         static Program()
         {
             container = new Container();
-            IRulesSet rulesSet = new DegradationRulesSet();
-            container.RegisterInstance<IList<IDegradeRule>>(rulesSet.CreateRules());
+            container.Register<IRulesSet, DegradationRulesSet>();
             container.Register<QualityAdjuster>();
+            container.Register<IItemSet, DefaultItemSet>();
             container.Verify();
         }
 
         static void Main(string[] args)
         {
             QualityAdjuster qualityAdjuster = container.GetInstance<QualityAdjuster>();
+            IItemSet itemSet = container.GetInstance<IItemSet>();
 
             System.Console.WriteLine("OMGHAI!");
-            IList<Item> Items = new List<Item>()
-            {
-                new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
-                new AgedBrie() {SellIn = 2, Quality = 0},
-                new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
-                new Sulfuras() { SellIn = 0},
-                new BackstagePass()
-                {
-                    SellIn = 15,
-                    Quality = 20
-                },
-                new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
-            };
 
             var app = new Program();
 
-            qualityAdjuster.Update(Items);
+            qualityAdjuster.Update(itemSet.GetItems());
 
             System.Console.ReadKey();
 

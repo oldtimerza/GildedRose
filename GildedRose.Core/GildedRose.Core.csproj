@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultItemSet.cs" />
     <Compile Include="DegradationRulesSet.cs" />
+    <Compile Include="IItemSet.cs" />
     <Compile Include="IRulesSet.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\SpecialItems\AgedBrie.cs" />
