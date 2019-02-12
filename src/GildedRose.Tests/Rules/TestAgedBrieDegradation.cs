@@ -1,4 +1,5 @@
 ﻿using GildedRose.Console.Models;
+using GildedRose.Core.Models.SpecialItems;
 using GildedRose.Core.Rules;
 using NUnit.Framework;
 
@@ -7,41 +8,40 @@ namespace GildedRose.Tests.Rules
     [TestFixture]
     class TestAgedBrieDegradation
     {
-        private IDegradeRule rule;
-        private int quality;
+        private IDegradeRule _rule;
+        private int _quality;
 
         [SetUp]
-        public void setup()
+        public void Setup()
         {
-            rule = new AgedBrieDegradation();
-            quality = 49;
+            _rule = new AgedBrieDegradation();
+            _quality = 49;
         }
 
 
         [Test]
-        public void agedBrieShouldGoUpInQuality()
+        public void AgedBrieShouldGoUpInQuality()
         {
-            Item item = new Item()
+            Item item = new AgedBrie()
             {
-                Name = "Aged Brie",
-                Quality = quality,
+                Quality =  _quality,
                 SellIn = 10
             };
-            rule.apply(item);
-            Assert.That(item.Quality, Is.EqualTo(quality + 1));
+            _rule.Apply(item);
+            Assert.That(item.Quality, Is.EqualTo(_quality + 1));
         }
 
         [Test]
-        public void shouldNotApplyToNormalItems()
+        public void ShouldNotApplyToNormalItems()
         {
             Item item = new Item()
             {
                 Name = "Not Aged Brie",
-                Quality = quality,
+                Quality = _quality,
                 SellIn = 10
             };
-            rule.apply(item);
-            Assert.That(item.Quality, Is.EqualTo(quality));
+            _rule.Apply(item);
+            Assert.That(item.Quality, Is.EqualTo(_quality));
         }
     }
 }

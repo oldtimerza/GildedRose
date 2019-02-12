@@ -4,7 +4,7 @@ namespace GildedRose.Core.Rules
 {
     public class ItemsDegradeBeforeSellBy : IDegradeRule
     {
-        public void apply(Item item)
+        public void Apply(Item item)
         {
             if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
             {

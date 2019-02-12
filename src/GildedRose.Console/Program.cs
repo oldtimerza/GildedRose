@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using GildedRose.Console.Models;
 using GildedRose.Core;
+using GildedRose.Core.Models.SpecialItems;
 using GildedRose.Core.Rules;
 using SimpleInjector;
 
@@ -14,7 +15,7 @@ namespace GildedRose.Console
         {
             container = new Container();
             IRulesEngine rulesEngine = new DegradationRulesEngine();
-            container.RegisterInstance<IList<IDegradeRule>>(rulesEngine.createRules());
+            container.RegisterInstance<IList<IDegradeRule>>(rulesEngine.CreateRules());
             container.Register<QualityManager>();
             container.Verify();
         }
@@ -41,7 +42,7 @@ namespace GildedRose.Console
 
             var app = new Program();
 
-            qualityManager.update(Items);
+            qualityManager.Update(Items);
 
             System.Console.ReadKey();
 

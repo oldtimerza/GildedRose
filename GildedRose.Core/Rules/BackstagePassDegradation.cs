@@ -1,12 +1,13 @@
 ﻿using GildedRose.Console.Models;
+using GildedRose.Core.Models.SpecialItems;
 
 namespace GildedRose.Core.Rules
 {
     public class BackstagePassDegradation: IDegradeRule
     {
-        public void apply(Item item)
+        public void Apply(Item item)
         {
-            if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+            if (item.Name == BackstagePass.SpecialName)
             {
                 if (item.Quality < 50)
                 {

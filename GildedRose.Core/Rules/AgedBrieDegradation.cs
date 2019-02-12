@@ -1,12 +1,13 @@
 ﻿using GildedRose.Console.Models;
+using GildedRose.Core.Models.SpecialItems;
 
 namespace GildedRose.Core.Rules
 {
     public class AgedBrieDegradation : IDegradeRule
     {
-        public void apply(Item item)
+        public void Apply(Item item)
         {
-            if (item.Name == "Aged Brie")
+            if (item.Name == AgedBrie.SpecialName)
             {
                 if (item.Quality < 50)
                 {

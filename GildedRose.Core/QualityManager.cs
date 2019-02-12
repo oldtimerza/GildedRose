@@ -6,20 +6,20 @@ namespace GildedRose.Core
 {
     public class QualityManager
     {
-        private IList<IDegradeRule> rules;
+        private readonly IList<IDegradeRule> rules;
 
         public QualityManager(IList<IDegradeRule> rules)
         {
             this.rules = rules;
         }
 
-        public void update(IList<Item> Items)
+        public void Update(IList<Item> Items)
         {
             foreach(Item item in Items)
             {
                 foreach (IDegradeRule rule in rules)
                 {
-                    rule.apply(item);
+                    rule.Apply(item);
                 }
 
                 if (item.Name != "Sulfuras, Hand of Ragnaros")

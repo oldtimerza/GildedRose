@@ -4,6 +4,6 @@ namespace GildedRose.Core.Rules
 {
     public interface IDegradeRule
     {
-        void apply(Item item);
+        void Apply(Item item);
     }
 }

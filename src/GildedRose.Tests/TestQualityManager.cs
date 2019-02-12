@@ -8,22 +8,22 @@ namespace GildedRose.Tests
     [TestFixture]
     class TestQualityManager
     {
-        private QualityManager qualityManger;
+        private QualityManager _qualityManger;
 
-        private IRulesEngine rulesEngine;
+        private IRulesEngine _rulesEngine;
 
-        private IList<Item> items;
+        private IList<Item> _items;
 
         [SetUp]
-        public void setup()
+        public void Setup()
         {
-            rulesEngine = new DegradationRulesEngine();
-            qualityManger = new QualityManager(rulesEngine.createRules());
-            items = new List<Item>();
+            _rulesEngine = new DegradationRulesEngine();
+            _qualityManger = new QualityManager(_rulesEngine.CreateRules());
+            _items = new List<Item>();
         }
 
         [Test]
-        public void itemQualityDegradesEachDayNormallyBeforeSellBy()
+        public void ItemQualityDegradesEachDayNormallyBeforeSellBy()
         {
             int quality = 10;
             Item item = new Item()
@@ -32,15 +32,15 @@ namespace GildedRose.Tests
                 SellIn = 1,
                 Quality = quality
             };
-            items.Add(item);
+            _items.Add(item);
 
-            qualityManger.update(items);
+            _qualityManger.Update(_items);
 
             Assert.That(item.Quality, Is.EqualTo(quality - 1));
         }
 
         [Test]
-        public void itemQualityDegradeTwiceAsFastAfterSellBy()
+        public void ItemQualityDegradeTwiceAsFastAfterSellBy()
         {
             int quality = 10;
             Item item = new Item()
@@ -49,15 +49,15 @@ namespace GildedRose.Tests
                 SellIn = -1,
                 Quality = quality
             };
-            items.Add(item);
+            _items.Add(item);
 
-            qualityManger.update(items);
+            _qualityManger.Update(_items);
 
             Assert.That(item.Quality, Is.EqualTo(quality - 2));
         }
 
         [Test]
-        public void itemQualityIsNeverNegative()
+        public void ItemQualityIsNeverNegative()
         {
             int quality = 0;
             Item item = new Item()
@@ -66,15 +66,15 @@ namespace GildedRose.Tests
                 SellIn = -1,
                 Quality = quality
             };
-            items.Add(item);
+            _items.Add(item);
             
-            qualityManger.update(items);
+            _qualityManger.Update(_items);
 
             Assert.That(item.Quality, Is.GreaterThan(-1));
         }
 
         [Test]
-        public void itemQualityIsNeverMoreThan50()
+        public void ItemQualityIsNeverMoreThan50()
         {
             int quality = 50;
             Item item = new Item()
@@ -83,15 +83,15 @@ namespace GildedRose.Tests
                 SellIn = 1,
                 Quality = quality
             };
-            items.Add(item);
+            _items.Add(item);
 
-            qualityManger.update(items);
+            _qualityManger.Update(_items);
 
             Assert.That(item.Quality, Is.LessThan(51));
         }
 
         [Test]
-        public void agedBrieIncreasesAsItGetsOlderRegardlessOfSellByDate()
+        public void AgedBrieIncreasesAsItGetsOlderRegardlessOfSellByDate()
         {
             Item brie = new Item()
             {
@@ -99,16 +99,16 @@ namespace GildedRose.Tests
                 SellIn = -1,
                 Quality = 48
             };
-            items.Add(brie);
+            _items.Add(brie);
 
-            qualityManger.update(items);
+            _qualityManger.Update(_items);
 
             int expectedQuality = 50;
             Assert.That(brie.Quality, Is.EqualTo(expectedQuality));
         }
 
         [Test]
-        public void sulfurasDisregardsSellByAndNeverDecreasesQuality()
+        public void SulfurasDisregardsSellByAndNeverDecreasesQuality()
         {
             int quality = 50;
             Item sulfuras = new Item()
@@ -117,15 +117,15 @@ namespace GildedRose.Tests
                 SellIn = -1,
                 Quality = quality
             };
-            items.Add(sulfuras);
+            _items.Add(sulfuras);
 
-            qualityManger.update(items);
+            _qualityManger.Update(_items);
 
             Assert.That(sulfuras.Quality, Is.EqualTo(quality));
         }
 
         [Test]
-        public void backStagePassesIncreaseApproachingSellby()
+        public void BackStagePassesIncreaseApproachingSellby()
         {
             int quality = 25;
             Item backStagePass = new Item()
@@ -134,15 +134,15 @@ namespace GildedRose.Tests
                 SellIn = 20,
                 Quality = quality
             };
-            items.Add(backStagePass);
+            _items.Add(backStagePass);
 
-            qualityManger.update(items);
+            _qualityManger.Update(_items);
 
             Assert.That(backStagePass.Quality, Is.EqualTo(quality + 1));
         }
 
         [Test]
-        public void backStagePassesIncreaseTwiceAsFastLessThan10DaysBeforeSale()
+        public void BackStagePassesIncreaseTwiceAsFastLessThan10DaysBeforeSale()
         {
             int quality = 25;
             Item backStagePass = new Item()
@@ -151,15 +151,15 @@ namespace GildedRose.Tests
                 SellIn = 9,
                 Quality = quality
             };
-            items.Add(backStagePass);
+            _items.Add(backStagePass);
 
-            qualityManger.update(items);
+            _qualityManger.Update(_items);
 
             Assert.That(backStagePass.Quality, Is.EqualTo(quality + 2));
         }
 
         [Test]
-        public void backStagePassesIncreaseThreeTimesFasterLessThan5DaysBeforeSale()
+        public void BackStagePassesIncreaseThreeTimesFasterLessThan5DaysBeforeSale()
         {
             int quality = 25;
             Item backStagePass = new Item()
@@ -168,15 +168,15 @@ namespace GildedRose.Tests
                 SellIn = 4,
                 Quality = quality
             };
-            items.Add(backStagePass);
+            _items.Add(backStagePass);
 
-            qualityManger.update(items);
+            _qualityManger.Update(_items);
 
             Assert.That(backStagePass.Quality, Is.EqualTo(quality + 3));
         }
 
         [Test]
-        public void backStagePassesAreWorthlessAfterSellby()
+        public void BackStagePassesAreWorthlessAfterSellby()
         {
             int quality = 25;
             Item backStagePass = new Item()
@@ -185,9 +185,9 @@ namespace GildedRose.Tests
                 SellIn = -1,
                 Quality = quality
             };
-            items.Add(backStagePass);
+            _items.Add(backStagePass);
 
-            qualityManger.update(items);
+            _qualityManger.Update(_items);
 
             Assert.That(backStagePass.Quality, Is.EqualTo(0));
         }

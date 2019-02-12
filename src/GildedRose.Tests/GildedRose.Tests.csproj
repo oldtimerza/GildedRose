@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\TestAgedBrieDegradation.cs" />
+    <Compile Include="Rules\TestBackstagePassDegradation.cs" />
     <Compile Include="Rules\TestItemsDegradeBeforeSellBy.cs" />
     <Compile Include="TestQualityManager.cs" />
   </ItemGroup>

@@ -8,7 +8,7 @@ namespace GildedRose.Tests.Rules
     class TestItemsDegradeBeforeSellBy
     {
         [Test]
-        public void shouldDegradeTheQualityBy1()
+        public void ShouldDegradeTheQualityBy1()
         {
             IDegradeRule rule = new ItemsDegradeBeforeSellBy();
             int quality = 50;
@@ -18,7 +18,7 @@ namespace GildedRose.Tests.Rules
                 Quality = quality,
                 SellIn = 10
             };
-            rule.apply(item);
+            rule.Apply(item);
 
             Assert.That(item.Quality, Is.EqualTo(quality - 1));
         }

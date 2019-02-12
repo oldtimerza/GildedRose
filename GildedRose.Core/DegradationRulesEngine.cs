@@ -5,7 +5,7 @@ namespace GildedRose.Core
 {
     public class DegradationRulesEngine : IRulesEngine
     {
-        public IList<IDegradeRule> createRules()
+        public IList<IDegradeRule> CreateRules()
         {
             IList<IDegradeRule> rules = new List<IDegradeRule>()
             {

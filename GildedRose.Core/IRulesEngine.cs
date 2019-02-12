@@ -5,6 +5,6 @@ namespace GildedRose.Core
 {
     public interface IRulesEngine
     {
-        IList<IDegradeRule> createRules();
+        IList<IDegradeRule> CreateRules();
     }
 }
